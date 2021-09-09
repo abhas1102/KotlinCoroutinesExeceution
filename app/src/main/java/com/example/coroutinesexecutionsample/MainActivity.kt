@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //Usage of RunBlocking
-       /* Log.d(TAG,"Before runBlocking")
+      /*  Log.d(TAG,"Before runBlocking")
         runBlocking {
             launch(Dispatchers.IO) {
                 delay(3000L)
@@ -29,17 +29,34 @@ class MainActivity : AppCompatActivity() {
             }
 
             Log.d(TAG,"Run Blocking started")
-            delay(5000L)
+            delay(2000L)
             Log.d(TAG,"End of runBlocking")
         }
 
         Log.d(TAG,"After Run Blocking") */
-        Log.d(TAG,"Before runBlocking")
+
+        runBlocking {
+            delay(1000L)
+            GlobalScope.launch {
+                Log.d(TAG, "1")
+            }
+            delay(1000L)
+            doSomething()
+            GlobalScope.launch {
+                delay(1000L)
+                Log.d(TAG, "2")
+            }
+            Log.d(TAG, "3")
+        }
+        Log.d(TAG, "4")
+    }
+
+     /*   Log.d(TAG,"Before runBlocking")
         GlobalScope.launch{
             delay(5000L)
             Log.d(TAG,"Ram meets Lakshman")
         }
-        Log.d(TAG,"Sita Mata kidnapped by Paapi Raavan")
+        Log.d(TAG,"Sita Mata kidnapped by Paapi Raavan") */
 
 
      /*   GlobalScope.launch(Dispatchers.IO){
@@ -96,9 +113,12 @@ class MainActivity : AppCompatActivity() {
 
 
     } */
+     suspend fun doSomething() {
+         Log.d(TAG, "5")
+         delay(1000L)
+     }
 }
    /* suspend fun doNetworkCall():String{
         delay(5000L)
         return "East and West India is the Best"
     } */
-}
