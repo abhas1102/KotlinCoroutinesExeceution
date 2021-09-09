@@ -7,7 +7,7 @@ import com.example.coroutinesexecutionsample.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding:ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     val TAG = "Main Activity"
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,8 +15,21 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //Jobs and cancellation
+        val job = GlobalScope.launch(Dispatchers.Default) {
+            withTimeout(1000L) {
+                for (i in 30..40) {
+                    if (isActive) {
+                        Log.d(TAG, "Result for i= $i: ${fib(i)}")
+                    }
+                }
+            }
+            Log.d(TAG, "Ending running calculation")
+        }
+    }
+
         //Usage of RunBlocking
-      /*  Log.d(TAG,"Before runBlocking")
+        /*  Log.d(TAG,"Before runBlocking")
         runBlocking {
             launch(Dispatchers.IO) {
                 delay(3000L)
@@ -34,8 +47,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         Log.d(TAG,"After Run Blocking") */
-
-        runBlocking {
+        // Run Blocking practise
+        /*  runBlocking {
             delay(1000L)
             GlobalScope.launch {
                 Log.d(TAG, "1")
@@ -49,9 +62,9 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, "3")
         }
         Log.d(TAG, "4")
-    }
+    } */
 
-     /*   Log.d(TAG,"Before runBlocking")
+        /*   Log.d(TAG,"Before runBlocking")
         GlobalScope.launch{
             delay(5000L)
             Log.d(TAG,"Ram meets Lakshman")
@@ -59,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG,"Sita Mata kidnapped by Paapi Raavan") */
 
 
-     /*   GlobalScope.launch(Dispatchers.IO){
+        /*   GlobalScope.launch(Dispatchers.IO){
             Log.d(TAG,"Starting coroutine in thread ${Thread.currentThread().name}")
             val answer = doNetworkCall()
             withContext(Dispatchers.Main){
@@ -68,7 +81,7 @@ class MainActivity : AppCompatActivity() {
             }
         } */
 
-     /*   Log.d(TAG, "1")
+        /*   Log.d(TAG, "1")
         GlobalScope.launch {
             doSomething()
             delay(1000L)
@@ -113,11 +126,19 @@ class MainActivity : AppCompatActivity() {
 
 
     } */
-     suspend fun doSomething() {
-         Log.d(TAG, "5")
-         delay(1000L)
-     }
-}
+        /*  suspend fun doSomething() {
+            Log.d(TAG, "5")
+            delay(1000L)
+        } */
+        fun fib(n: Int): Long {
+            return if (n == 0) 0
+            else if (n == 1) 1
+            else fib(n - 1) + fib(n - 2)
+        }
+
+
+    }
+
    /* suspend fun doNetworkCall():String{
         delay(5000L)
         return "East and West India is the Best"
