@@ -15,8 +15,10 @@ class MainActivity : AppCompatActivity() {
 
         //GlobalScope means coroutines started under this scope will live as long our application does
         GlobalScope.launch {
-            Log.d(TAG,"Coroutine says hello from thread")
+            Log.d(TAG,"Coroutine says hello from thread ${Thread.currentThread().name}")
         }
+
+        Log.d(TAG,"Coroutine says hello from thread ${Thread.currentThread().name}")
 
     }
 }
