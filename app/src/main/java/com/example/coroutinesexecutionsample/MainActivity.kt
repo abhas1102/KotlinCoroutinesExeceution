@@ -15,14 +15,41 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        GlobalScope.launch(Dispatchers.IO){
+        //Usage of RunBlocking
+       /* Log.d(TAG,"Before runBlocking")
+        runBlocking {
+            launch(Dispatchers.IO) {
+                delay(3000L)
+                Log.d(TAG,"Finished IO coroutine 1")
+            }
+
+            launch(Dispatchers.IO) {
+                delay(3000L)
+                Log.d(TAG,"Finished IO coroutine 2")
+            }
+
+            Log.d(TAG,"Run Blocking started")
+            delay(5000L)
+            Log.d(TAG,"End of runBlocking")
+        }
+
+        Log.d(TAG,"After Run Blocking") */
+        Log.d(TAG,"Before runBlocking")
+        GlobalScope.launch{
+            delay(5000L)
+            Log.d(TAG,"Ram meets Lakshman")
+        }
+        Log.d(TAG,"Sita Mata kidnapped by Paapi Raavan")
+
+
+     /*   GlobalScope.launch(Dispatchers.IO){
             Log.d(TAG,"Starting coroutine in thread ${Thread.currentThread().name}")
             val answer = doNetworkCall()
             withContext(Dispatchers.Main){
                 Log.d(TAG,"Setting text in thread ${Thread.currentThread().name}")
                 binding.tvDummy.text = answer
             }
-        }
+        } */
 
      /*   Log.d(TAG, "1")
         GlobalScope.launch {
@@ -70,8 +97,8 @@ class MainActivity : AppCompatActivity() {
 
     } */
 }
-    suspend fun doNetworkCall():String{
+   /* suspend fun doNetworkCall():String{
         delay(5000L)
         return "East and West India is the Best"
-    }
+    } */
 }
