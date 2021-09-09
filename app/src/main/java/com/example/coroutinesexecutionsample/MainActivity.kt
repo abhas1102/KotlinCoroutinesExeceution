@@ -14,8 +14,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //GlobalScope means coroutines started under this scope will live as long our application does
+        Log.d(TAG, "1")
         GlobalScope.launch {
+            doSomething()
+            delay(1000L)
+            Log.d(TAG, "3")
+        }
+        GlobalScope.launch {
+            delay(1000L)
+            Log.d(TAG, "4")
+        }
+        Log.d(TAG, "5")
+
+    }
+    suspend fun doSomething() {
+        delay(500L)
+        Log.d(TAG, "2")
+        delay(1000L)
+
+        //GlobalScope means coroutines started under this scope will live as long our application does
+        /* GlobalScope.launch {
            // delay(3000L)
           //  Log.d(TAG,"Coroutine says hello from thread ${Thread.currentThread().name}")
             val networkCall1=doNetworkCall()
@@ -27,8 +45,8 @@ class MainActivity : AppCompatActivity() {
 
        // Log.d(TAG,"Coroutine says hello from thread ${Thread.currentThread().name}")
 
-    }
-    suspend fun doNetworkCall():String{
+    } */
+        /* suspend fun doNetworkCall():String{
         delay(3000L)
         return "This is the answer"
 
@@ -37,7 +55,8 @@ class MainActivity : AppCompatActivity() {
     suspend fun doNetworkCall2():String{
         delay(3000L)
         return "This is my answer"
+    } */
+
+
     }
-
-
 }
