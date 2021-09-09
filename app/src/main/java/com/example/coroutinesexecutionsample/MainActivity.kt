@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import com.example.coroutinesexecutionsample.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
+import kotlin.system.measureTimeMillis
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -15,8 +16,21 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        GlobalScope.launch(Dispatchers.IO) {
+            val time = measureTimeMillis {
+                val answer1 = async { networkCall1() }
+                val answer2 = async { networkCall2() }
+
+                Log.d(TAG, "Answer1 is:${answer1.await()}")
+                Log.d(TAG, "Answer2 is:${answer2.await()}")
+            }
+            Log.d(TAG,"It takes $time seconds")
+
+        }
+    }
+
         //Jobs and cancellation
-        val job = GlobalScope.launch(Dispatchers.Default) {
+        /*  val job = GlobalScope.launch(Dispatchers.Default) {
             withTimeout(1000L) {
                 for (i in 30..40) {
                     if (isActive) {
@@ -26,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             }
             Log.d(TAG, "Ending running calculation")
         }
-    }
+    } */
 
         //Usage of RunBlocking
         /*  Log.d(TAG,"Before runBlocking")
@@ -130,14 +144,24 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, "5")
             delay(1000L)
         } */
-        fun fib(n: Int): Long {
+        /*  fun fib(n: Int): Long {
             return if (n == 0) 0
             else if (n == 1) 1
             else fib(n - 1) + fib(n - 2)
         }
+       */
+        suspend fun networkCall1(): String {
+            delay(3000L)
+            return "network call1"
+        }
 
-
+        suspend fun networkCall2(): String {
+            delay(3000L)
+            return "network call2"
+        }
     }
+
+
 
    /* suspend fun doNetworkCall():String{
         delay(5000L)
